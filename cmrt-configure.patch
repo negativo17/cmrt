@@ -1,0 +1,29 @@
+diff -Naur cmrt-1.0.6.old/configure.ac cmrt-1.0.6/configure.ac
+--- cmrt-1.0.6.old/configure.ac	2020-05-03 18:21:07.195872259 +0200
++++ cmrt-1.0.6/configure.ac	2020-05-03 18:21:17.403050682 +0200
+@@ -122,8 +122,8 @@
+ AC_SUBST(CMRT_LT_LDFLAGS)
+ 
+ 
+-AC_DISABLE_STATIC
+-AC_PROG_LIBTOOL
++LT_INIT([disable-static])
++AC_SUBST([LIBTOOL_DEPS])
+ AC_PROG_CC
+ AM_PROG_CC_C_O
+ AC_PROG_CXX
+diff -Naur cmrt-1.0.6.old/Makefile.am cmrt-1.0.6/Makefile.am
+--- cmrt-1.0.6.old/Makefile.am	2020-05-03 18:21:07.194872241 +0200
++++ cmrt-1.0.6/Makefile.am	2020-05-03 18:21:17.452051539 +0200
+@@ -24,6 +24,11 @@
+ 
+ AUTOMAKE_OPTIONS = foreign
+ 
++LIBTOOL_DEPS = @LIBTOOL_DEPS@
++
++libtool: $(LIBTOOL_DEPS)
++	$(SHELL) ./config.status libtool
++
+ SUBDIRS = src pkgconfig
+ 
+ # Extra clean files so that maintainer-clean removes *everything*
